@@ -1,0 +1,25 @@
+module Resource;
+
+import Stdlib.Prelude open;
+import Anoma open;
+import Anoma.Builtin.System open;
+import Applib open;
+
+logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
+  true;
+
+label : Label := mkLabel (anomaEncode "Hello World!");
+
+value : Value := mkValue 0;
+
+mkHelloWorld (nonce : Nonce) : Resource :=
+  mkResource@{
+    logicRef := BindingReference.compute (logic);
+    labelRef := BindingReference.compute (label);
+    valueRef := BindingReference.compute (value);
+    quantity := 1;
+    ephemeral := false;
+    nullifierKeyCommitment := Universal.nullifierKeyCommitment;
+    nonce;
+    randSeed := UnusedRandSeed;
+  };

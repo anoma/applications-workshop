@@ -1,11 +1,17 @@
-<h1> Juvix Workshop</h1>
-<h1><a href="http://bit.ly/juvix-workshop">http://bit.ly/juvix-workshop</a></h1>
-<img alt="tara mascot smiling" width="400" src="./.resources/tara-smiling.png">
-<p>
-  <a href="https://discord.gg/PfaaFVErHt"><img src="https://img.shields.io/discord/952881043520774194?logo=discord"/></a>
+
+<p align="right">
+<img alt="anoma logo" width="200" src="./.assets/anoma-logo.png">
+</p>
+<h1> Applications Workshop </h1>
+
+<p align="left">
+<img alt="qr code" width="250" src="./.assets/qr-code.png">
 </p>
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/anoma/juvix-workshop?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/anoma/applications-workshop?quickstart=1)
+
+<h3><a href="https://github.com/anoma/applications-workshop">https://github.com/anoma/applications-workshop</a></h3>
+
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -82,6 +88,7 @@ In the extension tab search for `juvix` and install the extension that features 
 
 See the [vscode-juvix repository](https://github.com/anoma/vscode-juvix) for usage information.
 
+
 ### Emacs
 
 To get started, clone the [juvix-mode repository](https://github.com/anoma/juvix-mode.git)
@@ -117,9 +124,3 @@ juvix compile hello-world/HelloWorld.juvix && ./HelloWorld
 
 One of the goals of Juvix is to be used as language to write applications for
 the [Anoma protocol](https://anoma.net).
-
-In [anoma/](./anoma/) we will explore the structure of
-[Anoma](https://anoma.net) applications built using the
-[Taiga](https://github.com/anoma/taiga) execution model and use the [taiga
-simulator](https://github.com/anoma/taiga-simulator) to test them.
-
