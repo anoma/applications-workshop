@@ -4,6 +4,7 @@ import Anoma open;
 import Applib open;
 import WorkshopUtils open;
 
+
 logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
   let
     tag := Logic.Instance.tag publicInputs;
@@ -21,7 +22,7 @@ logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
          }
        | Created commitment := true;
 
--- You don't need to change anything below this point.
+--- Constructs a resource with a specified label.
 mkLabelledResource
   (label : String)
   (owner : ExternalIdentity)
@@ -39,6 +40,7 @@ mkLabelledResource
     nullifierKeyCommitment := Universal.nullifierKeyCommitment;
   };
 
+--- Constructs a resource with the label "Hello".
 mkHelloResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
   mkLabelledResource@{
     label := "Hello";
@@ -46,6 +48,7 @@ mkHelloResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
     nonce;
   };
 
+--- Constructs a resource with the label "World".
 mkWorldResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
   mkLabelledResource@{
     label := "World";
