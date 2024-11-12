@@ -5,16 +5,18 @@ import Applib open;
 import WorkshopUtils open;
 import Exercise_3.Resource open;
 
--- TODO
+{-
+  TODO: Write a function that transfers the `existingHelloWorld` resource to the `receiver`.
+-}
 transferHelloWorld
   (standardInputs : StandardInputs)
-  (existingHello : Resource)
+  (existingHelloWorld : Resource)
   (receiver : ExternalIdentity)
   : Transaction :=
   let
     nonce := generateNonce (StandardInputs.randSeed standardInputs);
   in prepareTransaction@{
        standardInputs;
-       consumed := Set.singleton existingHello;
+       consumed := TODO;
        created := TODO;
      };

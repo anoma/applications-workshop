@@ -5,7 +5,7 @@ import Applib open;
 import WorkshopUtils open;
 
 {-
-  TODO: Write a logic function checkiong that the consumption of the resource was authorized by the owner.
+  TODO: Write a logic function checking that the consumption of the resource was authorized by the owner.
   As a bonus, ensure that the quantity is 1.
 -}
 logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
