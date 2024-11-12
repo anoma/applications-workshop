@@ -10,6 +10,7 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "locale": "en",
         "workbench.colorTheme": "Default Dark+",
         "editor.formatOnSave": false,
         "editor.tabSize": 2,
