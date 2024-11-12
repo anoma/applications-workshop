@@ -1,0 +1,5 @@
+# directories
+.juvix-build
+
+# files
+.DS_Store

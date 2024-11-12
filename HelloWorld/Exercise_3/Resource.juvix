@@ -1,0 +1,37 @@
+module Exercise_3.Resource;
+
+import Anoma open;
+import Applib open;
+import WorkshopUtils open;
+
+-- NOTE: You don't need to change anything in this file.
+
+logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
+  let
+    tag := Logic.Instance.tag publicInputs;
+    customInputs := Logic.Witness.customInputs privateInputs;
+  in case tag of
+       | Consumed nullifier :=
+         case lookupResource nullifier customInputs of {
+           | nothing := false
+           | just self :=
+             isAuthorizedBy@{
+               signer := fromValueRef self;
+               origin := tag;
+               publicInputs;
+             }
+               && Resource.quantity self == 1
+         }
+       | Created commitment := true;
+
+mkHelloWorldResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
+  mkResource@{
+    labelRef := toLabelRef "Hello world!";
+    logicRef := toLogicRef logic;
+    valueRef := toValueRef owner;
+    quantity := 1;
+    ephemeral := false;
+    nonce;
+    randSeed := UnusedRandSeed;
+    nullifierKeyCommitment := Universal.nullifierKeyCommitment;
+  };

@@ -1,0 +1,54 @@
+module Intent.Resource;
+
+import Anoma open;
+import Applib open;
+import WorkshopUtils open;
+
+logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
+  let
+    tag := Logic.Instance.tag publicInputs;
+    customInputs := Logic.Witness.customInputs privateInputs;
+  in case tag of
+       | Consumed nullifier :=
+         case lookupResource nullifier customInputs of {
+           | nothing := false
+           | just self :=
+             isAuthorizedBy@{
+               signer := fromValueRef self;
+               origin := tag;
+               publicInputs;
+             }
+         }
+       | Created commitment := true;
+
+-- You don't need to change anything below this point.
+mkLabelledResource
+  (label : String)
+  (owner : ExternalIdentity)
+  (nonce : Nonce)
+  {ephemeral : Bool := false}
+  : Resource :=
+  mkResource@{
+    logicRef := toLogicRef logic;
+    labelRef := toLabelRef label;
+    valueRef := toValueRef owner;
+    quantity := 1;
+    nonce;
+    ephemeral;
+    randSeed := UnusedRandSeed;
+    nullifierKeyCommitment := Universal.nullifierKeyCommitment;
+  };
+
+mkHelloResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
+  mkLabelledResource@{
+    label := "Hello";
+    owner;
+    nonce;
+  };
+
+mkWorldResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
+  mkLabelledResource@{
+    label := "World";
+    owner;
+    nonce;
+  };

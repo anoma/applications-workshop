@@ -1,0 +1,85 @@
+module WorkshopUtils;
+
+import Stdlib.Prelude open public;
+import Stdlib.Data.Set as Set public;
+
+open Set using {Set} public;
+
+import Stdlib.Data.Map as Map public;
+import Anoma open;
+import Anoma.Builtin.System open public;
+import Applib open;
+import Applib.Authorization.Check open public;
+import Applib.Authorization.Message open public;
+
+axiom TODO : {A : Type} -> A;
+
+toLabelRef {T} (data : T) : LabelRef :=
+  BindingReference.compute (mkLabel (anomaEncode data));
+
+fromLabelRef {T} (resource : Resource) : T :=
+  resource
+    |> Resource.labelRef
+    |> lookupFromReferenceChecked
+    |> Label.unLabel
+    |> anomaDecode;
+
+toValueRef {T} (data : T) : ValueRef :=
+  BindingReference.compute (mkValue (anomaEncode data));
+
+fromValueRef {T} (resource : Resource) : T :=
+  resource
+    |> Resource.valueRef
+    |> lookupFromReferenceChecked
+    |> Value.unValue
+    |> anomaDecode;
+
+toLogicRef (func : Logic) : LogicRef := BindingReference.compute (func);
+
+fromLogicRef (resource : Resource) : Logic :=
+  resource |> Resource.logicRef |> lookupFromReferenceChecked;
+
+prepareTransaction
+  (standardInputs : StandardInputs)
+  (consumed created : Set Resource)
+  : Transaction :=
+  let
+    -- Put maps into the custom inputs that map:
+    -- - nullifiers to consumed resources
+    -- - commitments to created resources
+    tagsAndCustomInputs :=
+      computeTagsAndCustomInputs@{
+        consumed;
+        created;
+      };
+
+    tags := TagsAndCustomInputs.tags tagsAndCustomInputs;
+    pair := tagsToPair tags;
+    nullifiers := fst pair;
+    commitments := snd pair;
+
+    -- Put signed messages and signatures from the caller in the app data.
+    -- The signed messages link back to the original consumed resources, where the signature verification is part of the resource logic requiring the commitments of created resources to be part of the action.
+    appData :=
+      Set.map (nullifier in nullifiers) {
+          mkResourceRelationshipAppDataEntry@{
+            signer := Identity.internal (StandardInputs.caller standardInputs);
+            origin := Consumed nullifier;
+            mustBeConsumed := Set.empty;
+            mustBeCreated := commitments;
+          }
+        }
+        |> Map.fromSet;
+  in mkTransactionHelper@{
+       roots := Set.singleton (StandardInputs.currentRoot standardInputs);
+       actions :=
+         Set.singleton
+           mkActionHelper@{
+             consumed;
+             created;
+             tags := TagsAndCustomInputs.tags tagsAndCustomInputs;
+             appData;
+             customInputs :=
+               TagsAndCustomInputs.customInputs tagsAndCustomInputs;
+           };
+     };
