@@ -1,0 +1,30 @@
+module Exercise_1.Resource;
+
+import Anoma open;
+import Applib open;
+import WorkshopUtils open;
+
+--- A dummy logic function that always returns true.
+logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
+  true;
+
+--- A label containing the string "Hello world!".
+labelRef : LabelRef := toLabelRef "Hello world!";
+
+{-
+  TODO: Write the constructor of your Hello World resource.
+  You can use the definitions from above.
+  Check for errors with `juvix typecheck Exercise_1/Resource.juvix`
+-}
+mkLabelledResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
+  mkResource@{
+    labelRef := TODO;
+    logicRef := TODO;
+    valueRef := TODO;
+    quantity := TODO;
+    nonce;
+    -- NOTE: In this workshop, we don't bother about the fields below.
+    ephemeral := false;
+    randSeed := UnusedRandSeed;
+    nullifierKeyCommitment := Universal.nullifierKeyCommitment;
+  };

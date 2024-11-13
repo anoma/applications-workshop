@@ -1,0 +1,22 @@
+module Exercise_3.Transaction;
+
+import Anoma open;
+import Applib open;
+import WorkshopUtils open;
+import Exercise_3.Resource open;
+
+{-
+  TODO: Write a function that transfers the `existingHelloWorld` resource to the `receiver`.
+-}
+transferHelloWorld
+  (standardInputs : StandardInputs)
+  (existingHelloWorld : Resource)
+  (receiver : ExternalIdentity)
+  : Transaction :=
+  let
+    nonce := generateNonce (StandardInputs.randSeed standardInputs);
+  in prepareTransaction@{
+       standardInputs;
+       consumed := TODO;
+       created := TODO;
+     };

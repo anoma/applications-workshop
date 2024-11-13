@@ -1,0 +1,33 @@
+{
+  "name": "Ubuntu",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USERNAME": "vscode",
+      "VARIANT": "ubuntu-22.04"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "workbench.colorTheme": "Default Dark+",
+        "editor.formatOnSave": false,
+        "editor.tabSize": 2,
+        "editor.renderWhitespace": "trailing",
+        "files.trimTrailingWhitespace": true,
+        "extensions.ignoreRecommendations": true,
+        "terminal.integrated.confirmOnKill": "never",
+        "juvix-mode.opts": {
+          "internalBuildDir": "/workspaces/applications-workshop/.juvix-build"
+        },
+        "juvix-mode.juvixBinPath": "/home/vscode/.local/bin/",
+        "juvix-mode.juvixBinName": "juvix",
+        "juvix-mode.input.languages": ["Juvix", "JuvixCore"],
+        "juvix-mode.reloadReplOnSave": true,
+        "juvix-mode.typecheckOn": "none"
+      },
+      "extensions": ["Heliax.juvix-mode"]
+    }
+  },
+  "remoteUser": "vscode"
+}
