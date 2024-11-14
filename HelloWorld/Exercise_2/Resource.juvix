@@ -18,8 +18,8 @@ logic (publicInputs : Logic.Instance) (privateInputs : Logic.Witness) : Bool :=
            | nothing := false
            | just self :=
              isAuthorizedBy@{
-               signer := TODO;
-               origin := TODO;
+               signer := fromValueRef self;
+               origin := tag;
                publicInputs;
              }
          }

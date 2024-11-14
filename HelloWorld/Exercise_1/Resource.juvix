@@ -18,10 +18,10 @@ labelRef : LabelRef := toLabelRef "Hello world!";
 -}
 mkHelloWorldResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
   mkResource@{
-    labelRef := TODO;
-    logicRef := TODO;
-    valueRef := TODO;
-    quantity := TODO;
+    labelRef;
+    logicRef := toLogicRef logic;
+    valueRef := toValueRef owner;
+    quantity := 1;
     nonce;
     -- NOTE: In this workshop, we don't bother about the fields below.
     ephemeral := false;

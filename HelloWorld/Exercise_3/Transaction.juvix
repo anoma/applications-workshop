@@ -17,6 +17,11 @@ transferHelloWorld
     nonce := generateNonce (StandardInputs.randSeed standardInputs);
   in prepareTransaction@{
        standardInputs;
-       consumed := TODO;
-       created := TODO;
+       consumed := Set.singleton existingHelloWorld;
+       created :=
+         Set.singleton
+           mkHelloWorldResource@{
+             owner := receiver;
+             nonce;
+           };
      };
