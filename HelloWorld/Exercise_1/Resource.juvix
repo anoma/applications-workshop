@@ -16,7 +16,7 @@ labelRef : LabelRef := toLabelRef "Hello world!";
   You can use the definitions from above.
   Check for errors with `juvix typecheck Exercise_1/Resource.juvix`
 -}
-mkLabelledResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
+mkHelloWorldResource (owner : ExternalIdentity) (nonce : Nonce) : Resource :=
   mkResource@{
     labelRef := TODO;
     logicRef := TODO;
