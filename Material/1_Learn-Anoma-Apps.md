@@ -140,10 +140,9 @@ The kind is used to check if transactions are balanced.
 **Transactions** consume and create resources.
 
 - Transactions with equal quantities of created and consumed resources of the same kind are **balanced**.
-- If all resource logics are
-
 - An unbalanced transaction is called **intent**.
-- Only balanced and transactions can be executed
+- A transaction is **valid** if all resource logics are valid.
+- Only balanced and valid transactions can be executed
 
   |       Consumed        |        Created        | Balanced? ✅/❌ |
   | :-------------------: | :-------------------: | :-------------: |
@@ -165,12 +164,14 @@ type Transaction :=
     delta : Delta;
     deltaProof : Delta.Proof;
   };
+```
 
 - **`actions`:** Contains
 - **`roots`:** Computed for each consumed resource.
 - **`delta`:** Computed for each consumed resource.
 - **`deltaProof`:** Computed for each consumed resource.
 
+```
 type Action :=
   mkAction@{
     commitments : Set Commitment;
